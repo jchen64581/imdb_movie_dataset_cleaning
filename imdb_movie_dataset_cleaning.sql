@@ -6,6 +6,9 @@ SELECT * FROM top1000_movies;
 SELECT LEFT(RIGHT(year, 5),4) AS year 
 FROM top1000_movies;
 
+-- enable safe mode
+SET SQL_SAFE_UPDATES = 0;
+
 UPDATE top1000_movies
 SET year =  LEFT(RIGHT(year, 5),4);
 
@@ -17,7 +20,6 @@ FROM top1000_movies;
 UPDATE top1000_movies
 SET movie_length =  TRIM(SUBSTRING(movie_length,1,3));
 
-SELECT * FROM top1000_movies;
 
 -- remove thousand seperator from votes for further cleaning
 SELECT REPLACE(votes, ',', '') 
@@ -31,9 +33,8 @@ SET votes =  REPLACE(votes, ',', '');
 SELECT column_name, DATA_TYPE 
 FROM INFORMATION_SCHEMA.COLUMNS 
 WHERE table_name = 'top1000_movies';
--- Undesired type/Type mismatch: as we can see, data type for year, movie_length, and votes are all string, which doesn't make sense, they should be cast to int type
+-- Undesired type/Type mismatch: as we can see, data type for year, movie_length, and votes are all string, which do not make sense, they should be cast to int type
 
-SELECT *  FROM top1000_movies;
 
 -- change the data type
 ALTER TABLE top1000_movies    
@@ -43,76 +44,29 @@ MODIFY year YEAR(4);
 
 -- standarize genre column, create columns for different genres
 ALTER TABLE top1000_movies
-ADD action int;
-
-ALTER TABLE top1000_movies
-ADD adventure int;
-
-ALTER TABLE top1000_movies
-ADD animation int;
-
-ALTER TABLE top1000_movies
-ADD biography int;
-
-ALTER TABLE top1000_movies
-ADD comedy int;
-
-ALTER TABLE top1000_movies
-ADD crime int;
-
-ALTER TABLE top1000_movies
-ADD documentary int;
-
-ALTER TABLE top1000_movies
-ADD drama int;
-
-ALTER TABLE top1000_movies
-ADD family int;
-
-ALTER TABLE top1000_movies
-ADD Fantasy int;
-
-ALTER TABLE top1000_movies
-ADD Film_Noir int;
-
-ALTER TABLE top1000_movies
-ADD history int;
-
-ALTER TABLE top1000_movies
-ADD horror int;
-
-ALTER TABLE top1000_movies
-ADD music int;
-
-ALTER TABLE top1000_movies
-ADD musical int;
-
-ALTER TABLE top1000_movies
-ADD mystery int;
-
-ALTER TABLE top1000_movies
-ADD romance int;
-
-ALTER TABLE top1000_movies
-ADD sci_Fi int;
-
-ALTER TABLE top1000_movies
-ADD short_Film int;
-
-ALTER TABLE top1000_movies
-ADD sport int;
-
-ALTER TABLE top1000_movies
-ADD superhero int;
-
-ALTER TABLE top1000_movies
-ADD thriller int;
-
-
-ALTER TABLE top1000_movies
-ADD war int;
-
-ALTER TABLE top1000_movies
+ADD action int,
+ADD adventure int,
+ADD animation int,
+ADD biography int,
+ADD comedy int,
+ADD crime int,
+ADD documentary int,
+ADD drama int,
+ADD family int,
+ADD Fantasy int,
+ADD Film_Noir int,
+ADD history int,
+ADD horror int,
+ADD music int,
+ADD musical int,
+ADD mystery int,
+ADD romance int,
+ADD sci_Fi int,
+ADD short_Film int,
+ADD sport int,
+ADD superhero int,
+ADD thriller int,
+ADD war int,
 ADD western int;
 
 -- update table, movie with the corresponding genre will have the value 1, else 0
